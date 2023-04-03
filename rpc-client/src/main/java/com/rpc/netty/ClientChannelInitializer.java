@@ -6,7 +6,6 @@ import com.rpc.codec.Encoder;
 import com.rpc.message.RpcRequest;
 import com.rpc.message.RpcResponse;
 import com.rpc.serializer.jackson.JacksonSerializer;
-import com.rpc.zookeeper.Constant;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
