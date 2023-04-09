@@ -15,7 +15,7 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 public class CuratorClient {
-    private CuratorFramework curator;
+    private final CuratorFramework curator;
 
     public CuratorClient(String connectString, int sessionTimeout, int connectionTimeout) {
         curator = CuratorFrameworkFactory.builder()

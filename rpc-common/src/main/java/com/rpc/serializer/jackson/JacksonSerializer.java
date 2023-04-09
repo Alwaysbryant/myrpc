@@ -1,20 +1,15 @@
 package com.rpc.serializer.jackson;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.rpc.serializer.Serializer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 使用jackson进行序列化和反序列化
  */
 public class JacksonSerializer extends Serializer {
-    private static final Logger logger = LoggerFactory.getLogger(JacksonSerializer.class);
-
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     static {

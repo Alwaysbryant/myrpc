@@ -16,8 +16,8 @@ import java.util.*;
 public class ServiceRegister {
     private static final Logger logger = LoggerFactory.getLogger(ServiceRegister.class);
 
-    private CuratorClient client;
-    private List<String> paths = new ArrayList<>();
+    private final CuratorClient client;
+    private final List<String> paths = new ArrayList<>();
 
     public ServiceRegister(String address) {
         this.client = new CuratorClient(address);

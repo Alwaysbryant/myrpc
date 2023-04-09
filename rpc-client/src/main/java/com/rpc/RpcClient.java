@@ -15,20 +15,21 @@ import java.lang.reflect.Proxy;
 import java.util.concurrent.ThreadPoolExecutor;
 
 public class RpcClient implements ApplicationContextAware, DisposableBean {
-    private ServiceDiscovery discovery;
+    private final ServiceDiscovery discovery;
 
-    private static ThreadPoolExecutor executor = CustomThreadPool.createPool(RpcClient.class.getSimpleName(), 16, 8);
+    private static final ThreadPoolExecutor executor = CustomThreadPool.createPool(RpcClient.class.getSimpleName(), 16, 8);
 
     public RpcClient(String address) {
         this.discovery = new ServiceDiscovery(address);
     }
 
+    @SuppressWarnings("unchecked")
     public static <T, P> T createService(Class<T> tClass, String version) {
         return (T) Proxy.newProxyInstance(tClass.getClassLoader(), new Class[]{tClass}, new ObjectProxy<T, P>(tClass, version));
     }
 
     @Override
-    public void destroy() throws Exception {
+    public void destroy() {
         this.stop();
     }
 

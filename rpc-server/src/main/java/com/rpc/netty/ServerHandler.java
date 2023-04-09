@@ -16,11 +16,14 @@ import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.concurrent.ThreadPoolExecutor;
 
+/**
+ * Netty服务端自定义处理器
+ */
 public class ServerHandler extends SimpleChannelInboundHandler<RpcRequest> {
     private static final Logger logger = LoggerFactory.getLogger(ServerHandler.class);
 
-    private Map<String, Object> serviceMap;
-    private ThreadPoolExecutor executor;
+    private final Map<String, Object> serviceMap;
+    private final ThreadPoolExecutor executor;
 
     public ServerHandler(Map<String, Object> serviceMap, ThreadPoolExecutor executor) {
         this.serviceMap = serviceMap;
@@ -28,7 +31,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<RpcRequest> {
     }
 
     @Override
-    public void channelRead0(ChannelHandlerContext ctx, RpcRequest request) throws Exception {
+    public void channelRead0(ChannelHandlerContext ctx, RpcRequest request) {
         // 如果是心跳检测，直接返回
         if (Beat.REQUEST_ID.equalsIgnoreCase(request.getRequestId())) {
             logger.info("channel is heart beat");
@@ -93,7 +96,5 @@ public class ServerHandler extends SimpleChannelInboundHandler<RpcRequest> {
             response.setErrMsg(e.getMessage());
             e.printStackTrace();
         }
-
-
     }
 }

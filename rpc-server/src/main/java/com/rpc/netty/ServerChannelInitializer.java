@@ -16,6 +16,9 @@ import java.util.Map;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * NettyChannel初始化，添加处理器。
+ */
 public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> {
     private Map<String, Object> serviceMap;
     private ThreadPoolExecutor executor;

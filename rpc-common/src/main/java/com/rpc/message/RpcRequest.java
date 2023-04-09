@@ -1,7 +1,6 @@
 package com.rpc.message;
 
 import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
 
 /**
  * 请求体

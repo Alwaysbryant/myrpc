@@ -15,8 +15,8 @@ import java.util.UUID;
 public class ObjectProxy<T, P> implements InvocationHandler, RpcService<T, P, Function<T>>  {
     private final static Logger logger = LoggerFactory.getLogger(ObjectProxy.class);
 
-    private Class<T> clazz;
-    private String version;
+    private final Class<T> clazz;
+    private final String version;
 
     public ObjectProxy(Class<T> clazz, String version) {
         this.clazz = clazz;
@@ -27,16 +27,17 @@ public class ObjectProxy<T, P> implements InvocationHandler, RpcService<T, P, Fu
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         if (method.getDeclaringClass() == Object.class) {
             String name = method.getName();
-            if ("equals".equals(name)) {
-                return proxy == args[0];
-            } else if ("toString".equals(name)) {
-                return proxy.getClass().getName() + "@" +
-                        Integer.toHexString(System.identityHashCode(proxy)) +
-                        ", with InvocationHandler " + this;
-            } else if ("hashCode".equals(name)) {
-                return proxy.hashCode();
-            } else {
-                throw new IllegalStateException(String.valueOf(method));
+            switch (name) {
+                case "equals":
+                    return proxy == args[0];
+                case "toString":
+                    return proxy.getClass().getName() + "@" +
+                            Integer.toHexString(System.identityHashCode(proxy)) +
+                            ", with InvocationHandler " + this;
+                case "hashCode":
+                    return proxy.hashCode();
+                default:
+                    throw new IllegalStateException(String.valueOf(method));
             }
         }
         RpcRequest request = new RpcRequest();
@@ -56,7 +57,7 @@ public class ObjectProxy<T, P> implements InvocationHandler, RpcService<T, P, Fu
 
 
     @Override
-    public RpcFuture call(String methodName, Object... args) throws Exception {
+    public RpcFuture call(String methodName, Object... args) {
         String key = ServiceKeyUtil.generateKey(this.clazz.getSimpleName(), version);
         RpcRequest request = this.createRequest(this.clazz.getName(), methodName, args);
         ClientHandler clientHandler = ConnectionManager.getInstance().chooseHandler(key);

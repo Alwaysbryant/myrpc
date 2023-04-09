@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
  * 继承Serializable 默认方法实现获取当前方法名
  * @param <T>
  */
+@SuppressWarnings("unused")
 public interface Function<T> extends Serializable {
     default String getMethodName() throws Exception{
         Method method = this.getClass().getMethod("writeReplace");

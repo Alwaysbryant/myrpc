@@ -17,8 +17,8 @@ import java.util.List;
 public class Decoder extends ByteToMessageDecoder {
     private static final Logger logger = LoggerFactory.getLogger(Decoder.class);
 
-    private Class<?> clazz;
-    private Serializer serializer;
+    private final Class<?> clazz;
+    private final Serializer serializer;
 
     public Decoder(Class<?> clazz, Serializer serializer) {
         this.clazz = clazz;

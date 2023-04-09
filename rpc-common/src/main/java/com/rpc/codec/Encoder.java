@@ -13,8 +13,8 @@ import org.slf4j.LoggerFactory;
 public class Encoder extends MessageToByteEncoder<Object> {
     private static final Logger logger = LoggerFactory.getLogger(Encoder.class);
 
-    private Serializer serializer;
-    private Class<?> clazz;
+    private final Serializer serializer;
+    private final Class<?> clazz;
 
     public Encoder(Class<?> clazz, Serializer serializer) {
         this.clazz = clazz;
@@ -22,7 +22,7 @@ public class Encoder extends MessageToByteEncoder<Object> {
     }
 
     @Override
-    protected void encode(ChannelHandlerContext channelHandlerContext, Object o, ByteBuf byteBuf) throws Exception {
+    protected void encode(ChannelHandlerContext channelHandlerContext, Object o, ByteBuf byteBuf) {
         // 非空判断
         if (o == null) {
             logger.error("encoder object is null");

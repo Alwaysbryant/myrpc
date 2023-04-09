@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ThreadPoolExecutor;
 
-@SuppressWarnings("all")
 public class NettyServer extends Server {
     private static final Logger logger = LoggerFactory.getLogger(NettyServer.class);
     /**
@@ -25,7 +24,7 @@ public class NettyServer extends Server {
     /**
      * 连接address
      */
-    private String address;
+    private final String address;
     /**
      * 服务注册
      */
@@ -33,7 +32,7 @@ public class NettyServer extends Server {
     /**
      * 保存所有含有{@link com.rpc.annotation.RpcService} 的服务
      */
-    private Map<String, Object> serviceMap;
+    private final Map<String, Object> serviceMap;
 
     public NettyServer(String serverAddress, String registerAddress) {
         this.address = serverAddress;
@@ -47,10 +46,10 @@ public class NettyServer extends Server {
     }
 
     @Override
-    public void start() throws Exception {
+    public void start() {
         this.thread = new Thread(new Runnable() {
             // 创建线程池，用于服务端异步处理请求
-            ThreadPoolExecutor executor
+            final ThreadPoolExecutor executor
                     = CustomThreadPool.createPool(this.getClass().getSimpleName(), 32, 16);
 
             @Override
@@ -90,7 +89,7 @@ public class NettyServer extends Server {
     }
 
     @Override
-    public void stop() throws Exception {
+    public void stop() {
         if (thread != null || thread.isAlive()) {
             this.thread.interrupt();
         }
